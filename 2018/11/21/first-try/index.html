@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>first,try | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="自动化测试环境的准备Eclipce+Maven+Testng+Selinum+Firfox Test Case的编写（1）对于自动化代码层次的划分。  Action：该包是自动化测试用例的方法入口，每一个Action对应一个功能模块，命名规则以功能模块所在页面的URL名称近似，见其名如见其模。 ​       例：开源信息管理功能模块的URL：opsInfoManager，相互对应的Action就">
+<meta property="og:type" content="article">
+<meta property="og:title" content="first,try">
+<meta property="og:url" content="http://yoursite.com/2018/11/21/first-try/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="自动化测试环境的准备Eclipce+Maven+Testng+Selinum+Firfox Test Case的编写（1）对于自动化代码层次的划分。  Action：该包是自动化测试用例的方法入口，每一个Action对应一个功能模块，命名规则以功能模块所在页面的URL名称近似，见其名如见其模。 ​       例：开源信息管理功能模块的URL：opsInfoManager，相互对应的Action就">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-21T14:43:09.843Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="first,try">
+<meta name="twitter:description" content="自动化测试环境的准备Eclipce+Maven+Testng+Selinum+Firfox Test Case的编写（1）对于自动化代码层次的划分。  Action：该包是自动化测试用例的方法入口，每一个Action对应一个功能模块，命名规则以功能模块所在页面的URL名称近似，见其名如见其模。 ​       例：开源信息管理功能模块的URL：opsInfoManager，相互对应的Action就">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-first-try" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/21/first-try/" class="article-date">
+  <time datetime="2018-11-21T14:30:47.000Z" itemprop="datePublished">2018-11-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      first,try
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="自动化测试环境的准备"><a href="#自动化测试环境的准备" class="headerlink" title="自动化测试环境的准备"></a>自动化测试环境的准备</h2><p>Eclipce+Maven+Testng+Selinum+Firfox</p>
+<h2 id="Test-Case的编写"><a href="#Test-Case的编写" class="headerlink" title="Test Case的编写"></a>Test Case的编写</h2><p>（1）对于自动化代码层次的划分。</p>
+<ol>
+<li><p>Action：该包是自动化测试用例的方法入口，每一个Action对应一个功能模块，命名规则以功能模块所在页面的URL名称近似，见其名如见其模。</p>
+<p>​       例：开源信息管理功能模块的URL：opsInfoManager，相互对应的Action就命名为OpsInfoManagerAction.java，每一个Action中可以划分为三个部分：setup、test case、tearDown。setup中可以完成执行这个action所需要准备的工作，如驱动打开一个浏览器，执行sql操作准备数据环境；test case是多个方法，每个方法对应该功能模块的每一个功能测试点，以方法名称的首字母控制执行顺序；tearDown中主要的clear刚刚执行的case遗留的测试数据，保证每一次执行该Action的前后环境没有被改变。</p>
+</li>
+<li><p>Page：这包是为Action提供具体方法，每一个Page与一个Action相互对应，命名规则以功能模块所在页面的URL名称近似，如开源信息管理功能模块的Page命名规则就是OpsInfoManagerPage.java。如此抽取实际的操作函数是为了尽量保证Action的代码简洁明了，具体实现交由Page来操作。例：如果想要测试新增一个许可协议，那么只需在Action中的test case部分加入一个测试方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Public <span class="keyword">void</span> <span class="title">atestAddLisence</span><span class="params">()</span> <span class="keyword">throws</span> <span class="title">Exception</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">boolean</span> res=<span class="keyword">true</span>;</span><br><span class="line">	res=res &amp;&amp; HomePage.login(driver);</span><br><span class="line">    res=res &amp;&amp; HomePage.toManager(driver);</span><br><span class="line">	res=res &amp;&amp; ConfigManagerPage.addProtocol(driver);</span><br><span class="line">	assertEquals(res , <span class="keyword">true</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到这个方法中简单明了的指出新增一个许可协议需要的几个步骤：</p>
+<p>​     <strong>*</strong>（1）登陆指定的网站</p>
+<p>​    <strong>*</strong>（2）进入到指定页面</p>
+<p>​    <strong>*</strong>（3）执行新增操作</p>
+<p>​    <strong>*</strong>（4）判断执行结果</p>
+<p>Action不需了解具体每一步是如何执行的，只关注执行的结果，具体的执行步骤、页面元素的定位都是封装在Page里面。</p>
+</li>
+<li><p>page.properties文件</p>
+<p>该文件是页面元素的Xpath与Class的存放文件。讲Page中的获取元素的操作与元素具体的Xpath和Class抽离更方便后期的维护与管理，而Xpath和Class的命名规范自己定义，但是尽量能够见名如见其意。如：</p>
+<p>​      配置管理中的新增应用类型的button命名为：</p>
+<p>| <strong>ConfigManagerPage.addApplyBtn_xpath</strong> |<br>| :————————————-: |<br>| <strong>ConfigManagerPage.addApplyBtn_class</strong> |</p>
+<p>如若使用xpath尽可能的使用元素的id进行定位，这样会节省很多后期由于页面变动，导致元素xpath定位不到导致的维护负担。</p>
+</li>
+<li><p>Utils</p>
+<p>该包主要提供一些工具类：数据库操作类，Json格式转换类，接口驱动类，Web驱动类等。提供一些通用的函数封装。</p>
+</li>
+<li><p>Beans</p>
+<p>该包主要提供一些JavaBean，目前主要是用于接口自动化编写时的Json数据域对象之间的相互转换：参数与结果集的封装。</p>
+</li>
+<li><p>uploadFiles</p>
+<p>该包主要存放的是自动化测试过程中需要上传的测试文件，集中管理，方便明了。</p>
+</li>
+</ol>
+<h2 id="目前对于自动化测试用例的几点总结"><a href="#目前对于自动化测试用例的几点总结" class="headerlink" title="目前对于自动化测试用例的几点总结"></a>目前对于自动化测试用例的几点总结</h2><ol>
+<li><p>代码层次结构划分明确，有助于理解这个代码流程，可读性更高。</p>
+</li>
+<li><p>Test case中必须使用断言用来保证用例执行结果的可靠。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Public <span class="keyword">void</span> <span class="title">atestAddLisence</span><span class="params">()</span> <span class="keyword">throws</span> <span class="title">Exception</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">boolean</span> res=<span class="keyword">true</span>;</span><br><span class="line">    res=res &amp;&amp; HomePage.login(driver);</span><br><span class="line">    res=res &amp;&amp; HomePage.toManager(driver);</span><br><span class="line">    res=res &amp;&amp; ConfigManagerPage.addProtocol(driver);</span><br><span class="line">    assertEquals(res , <span class="keyword">true</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>命名规范化，名如其意。</p>
+<p>随着项目的不断迭代更新，功能越来越完善，自动化用例覆盖的愈来愈多，好的命名方式对于日后的维护管理十分有帮助。</p>
+</li>
+<li><p>每一次case的执行前后都要是干净的环境，不能遗留数据。</p>
+<p>每次执行结束的clear动作是为了下次的执行不受到这次执行的干扰，保证用例的可靠。</p>
+</li>
+<li><p>数据隔离。</p>
+<p>同样的sql插入操作可能在不同的功能模块中都要复用，若插入的数据都一样，那么会有几个问题：</p>
+<p>| <strong>若其中一个case执行完后clear的不够彻底，那么不光会影响这个case后续的执行，还会影响依赖相同数据的case的执行，不同case之间相互耦合，会导致case的不稳定。</strong> |<br>| ———————————————————— |<br>| <strong>由于自动化case的覆盖率逐渐提高，那么case的数量也逐渐上升，会导致整个case执行所需的时间越来越长，为了缩短执行时间，可能会配置使得多个case并行执行，但是由于两个case并行执行的顺序无法控制，若其中一个case执行完，另一个case执行一半，此时执行完的case进行clear操作，那么就把那个执行到一般的case所依赖的数据环境破坏了，从而会导致case的失败，这样case会很不稳定。</strong> |</p>
+</li>
+<li><p>参数化，不要硬编码。</p>
+<p>同一个方法，可能会被不同的功能模块调用，那为了做到第五点的数据隔离，就需要尽可能的参数化，方便更改参数，维护管理。</p>
+</li>
+<li><p>全部使用id定位元素，退而求其次使用class定位，坚决不要使用xpath很长的定位方式，减轻日后维护的负担。</p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/11/21/first-try/" data-id="cjora34xp000064hsxsra4i1e" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/11/21/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hello World</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/11/21/first-try/">first,try</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/21/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
