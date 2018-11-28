@@ -62,6 +62,150 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-v-if和v-show的异同与踩坑记录" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/28/v-if和v-show的异同与踩坑记录/" class="article-date">
+  <time datetime="2018-11-28T13:29:54.000Z" itemprop="datePublished">2018-11-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/28/v-if和v-show的异同与踩坑记录/">v-if和v-show的异同与踩坑记录</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>两者的同：</p>
+<p>（1）都是动态显示DOM元素 </p>
+<p>两者的异：</p>
+<p>（1）v-if是动态的向DOM树内添加或者删除DOM元素；v-show是通过设置DOM元素的display样式属性控制显隐； </p>
+<p>（2）v-if切换有<strong>一个局部编译/卸载的过程</strong>，切换过程中<strong>合适地销毁和重建内部的事件监听和子组件</strong>；v-show只是简单的基于css切换； </p>
+<p>（3）v-if是惰性的，如果初始条件为假，则什么也不做；只有<strong>在条件第一次变为真时才开始局部编译</strong>（编译被缓存？编译被缓存后，然后再切换的时候进行局部卸载); v-show是在任何条件下（首次条件是否为真）都被编译，<strong>然后被缓存</strong>，而且DOM元素保留； </p>
+<p>（4）v-if有更高的切换消耗；v-show有更高的初始渲染消耗； </p>
+<p>（5）v-if适合运营条件不大可能改变；v-show适合频繁切换。 </p>
+<p>在渲染多个元素时候可以把一个<template>元素作为包装元素,并在上面使用v-if进行条件判断,最终的渲染并不会包 含        这个元素.同时,v-show不支持<template>语法。el-table-column 上使用v-show表头没有，但是那一列的数据还是照常显示。</template></template></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/11/28/v-if和v-show的异同与踩坑记录/" data-id="cjp17jy5700028khsr2v2wnn4" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-this指向与箭头函数" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/28/this指向与箭头函数/" class="article-date">
+  <time datetime="2018-11-28T13:27:36.000Z" itemprop="datePublished">2018-11-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/28/this指向与箭头函数/">this指向与箭头函数</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>以this的使用场景进行分类：</p>
+<p>1.普通函数下，this 的指向</p>
+<p>2.构造函数下，this 的指向</p>
+<p>3.箭头函数下，this 的指向</p>
+<h3 id="普通函数下，this的指向"><a href="#普通函数下，this的指向" class="headerlink" title="普通函数下，this的指向"></a>普通函数下，this的指向</h3><p>（1）函数的定义位置不影响其this指向，this指向只和调用函数的对象有关。</p>
+<p>（2）多层嵌套的对象，内部方法的this指向离被调用函数最近的对象（window也是对象，其内部对象调用方法的this指向内部对象， 而非window）。</p>
+<p>（3）setTimeout &amp; setInterval 对于延时函数内部的回调函数的this指向全局对象window </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//时延函数的普通写法下的this指向</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>) </span>&#123;  </span><br><span class="line">    <span class="keyword">this</span>.age = <span class="number">0</span>;  </span><br><span class="line">    setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>);</span><br><span class="line">    &#125;, <span class="number">3000</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> Person();<span class="comment">//3秒后返回 window 对象</span></span><br></pre></td></tr></table></figure>
+<h3 id="构造函数下，this-的指向"><a href="#构造函数下，this-的指向" class="headerlink" title="构造函数下，this 的指向"></a>构造函数下，this 的指向</h3><p>（1）构造函数中的this与被创建的新对象绑定。 </p>
+<h3 id="箭头函数下，this-的指向"><a href="#箭头函数下，this-的指向" class="headerlink" title="箭头函数下，this 的指向"></a>箭头函数下，this 的指向</h3><p>（1）<strong>箭头函数不绑定this， 它会捕获其所在（即定义的位置）上下文的this值， 作为自己的this值</strong> </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>) </span>&#123;  </span><br><span class="line">    <span class="keyword">this</span>.age = <span class="number">0</span>;  </span><br><span class="line">    setInterval(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 回调里面的 `this` 变量就指向了期望的那个对象了</span></span><br><span class="line">        <span class="keyword">this</span>.age++;</span><br><span class="line">    &#125;, <span class="number">3000</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> Person(); <span class="comment">//三秒之后age变为1</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> adder = &#123;</span><br><span class="line">  base : <span class="number">1</span>,</span><br><span class="line">  add : <span class="function"><span class="keyword">function</span>(<span class="params">a</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> f = <span class="function"><span class="params">v</span> =&gt;</span> v + <span class="keyword">this</span>.base;</span><br><span class="line">    <span class="keyword">return</span> f(a);</span><br><span class="line">  &#125;,</span><br><span class="line">  addThruCall: <span class="function"><span class="keyword">function</span> <span class="title">inFun</span>(<span class="params">a</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> f = <span class="function"><span class="params">v</span> =&gt;</span> v + <span class="keyword">this</span>.base;</span><br><span class="line">    <span class="keyword">var</span> b = &#123;</span><br><span class="line">      base : <span class="number">2</span></span><br><span class="line">    &#125;;    </span><br><span class="line">    <span class="keyword">return</span> f.call(b, a);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(adder.add(<span class="number">1</span>));         <span class="comment">// 输出 2</span></span><br><span class="line"><span class="built_in">console</span>.log(adder.addThruCall(<span class="number">1</span>)); <span class="comment">// 仍然输出 2（而不是3，因为箭头函数不绑定this，其内部的this并没有因为call() 而改变，其this值仍然为函数inFun的this值，指向对象adder</span></span><br></pre></td></tr></table></figure>
+<p>（2）以上的箭头函数都是在方法内部，总之都是以非方法的方式使用，如果将箭头函数当做一个方法使用会怎样呢？ </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">  i: <span class="number">10</span>,</span><br><span class="line">  b: <span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="keyword">this</span>.i, <span class="keyword">this</span>),</span><br><span class="line">  c: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log( <span class="keyword">this</span>.i, <span class="keyword">this</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">obj.b();  <span class="comment">// undefined window&#123;...&#125;</span></span><br><span class="line">obj.c();  <span class="comment">// 10 Object &#123;...&#125;</span></span><br></pre></td></tr></table></figure>
+<p>作为方法的箭头函数this指向全局window对象，而普通函数则指向调用它的对象 。</p>
+<p><strong>ps: 最近遇到的一个小坑：当字符串为空时，split（）返回一个包含一个空字符串的数组，而不是一个空数组，如果字符串和分隔符都是空字符串，则返回一个空数组。</strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/11/28/this指向与箭头函数/" data-id="cjp17jy5200018khsypbyif2j" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-ElementUI列表无数据提示问题" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/28/ElementUI列表无数据提示问题/" class="article-date">
+  <time datetime="2018-11-28T13:24:52.000Z" itemprop="datePublished">2018-11-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/28/ElementUI列表无数据提示问题/">ElementUI列表无数据提示问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="背景："><a href="#背景：" class="headerlink" title="背景："></a>背景：</h3><p>VUE + Element-UI</p>
+<h3 id="需求："><a href="#需求：" class="headerlink" title="需求："></a>需求：</h3><p>列表无数据时的显示如下图</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/14720179-5c12614b36fe061b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1.png"></p>
+<p>由于列表的列数过长导致有横向滚动条出现，希望暂无数据以及这个img能够显示在滚动条与表头之间。</p>
+<h3 id="现状："><a href="#现状：" class="headerlink" title="现状："></a>现状：</h3><p>目前的实现形式是将暂无数据的提示封装为一个组件，无数据时显示在滚动条的下方，如下图</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/14720179-31b2668c1ef29cdc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2.png"></p>
+<h3 id="解决思路："><a href="#解决思路：" class="headerlink" title="解决思路："></a>解决思路：</h3><p>（1）修改el-table的源码，当data无数据时，按照我们需要的样子显示</p>
+<p>（2）在表头与滚动条之间动态的挂载和删除node节点</p>
+<h3 id="采取的解决方案："><a href="#采取的解决方案：" class="headerlink" title="采取的解决方案："></a>采取的解决方案：</h3><p>考虑到波及面小的关系，本项目暂时使用第二种动态挂载节点的方式。</p>
+<h3 id="具体的代码实现："><a href="#具体的代码实现：" class="headerlink" title="具体的代码实现："></a>具体的代码实现：</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">watch: &#123;</span><br><span class="line">      showNoData : &#123;</span><br><span class="line">        handler(val) &#123;</span><br><span class="line">          <span class="keyword">let</span> yy = <span class="string">`&lt;img data-v-245b79d0="" </span></span><br><span class="line"><span class="string">                         src="youimgsrc"&gt; </span></span><br><span class="line"><span class="string">                    &lt;div data-v-245b79d0="" class="tips-big"&gt;暂无数据&lt;/div&gt;`</span></span><br><span class="line">          <span class="keyword">let</span> div2 = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);</span><br><span class="line">          div2.setAttribute(<span class="string">'data-v-245b79d0'</span>, <span class="string">''</span>);</span><br><span class="line">          div2.setAttribute(<span class="string">'data-v-2014920a'</span>, <span class="string">''</span>);</span><br><span class="line">          div2.className = <span class="string">'no-data-big showtip'</span>;</span><br><span class="line">          div2.innerHTML = yy;</span><br><span class="line">          <span class="keyword">if</span>(<span class="keyword">this</span>.showNoData &amp;&amp; <span class="keyword">this</span>.count &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">this</span>.count++;</span><br><span class="line">            <span class="built_in">document</span>.getElementsByClassName(<span class="string">'el-table__header-wrapper'</span>)[<span class="number">0</span>].appendChild(div2);</span><br><span class="line">          &#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">document</span>.getElementsByClassName(<span class="string">'showtip'</span>).length)&#123;</span><br><span class="line">            <span class="keyword">this</span>.count--;</span><br><span class="line">            <span class="built_in">document</span>.getElementsByClassName(<span class="string">'el-table__header-wrapper'</span>)</span><br><span class="line">            [<span class="number">0</span>].removeChild(<span class="built_in">document</span>.getElementsByClassName(<span class="string">'showtip'</span>)[<span class="number">0</span>]);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure>
+<h3 id="简单解释："><a href="#简单解释：" class="headerlink" title="简单解释："></a>简单解释：</h3><p>代码中的div2就是需要动态挂载的node节点，利用showNoData判断是否没有数据，利用count防止不断的添加相同节点。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/11/28/ElementUI列表无数据提示问题/" data-id="cjp17jy4u00008khsf0m1e0xt" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-自动化测试小结" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/11/28/自动化测试小结/" class="article-date">
@@ -141,7 +285,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/28/自动化测试小结/" data-id="cjp179jx500006khsaucfhpgl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/11/28/自动化测试小结/" data-id="cjp17jy5a00038khsmuah6bfh" class="article-share-link">Share</a>
       
       
     </footer>
@@ -180,6 +324,18 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/11/28/v-if和v-show的异同与踩坑记录/">v-if和v-show的异同与踩坑记录</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/28/this指向与箭头函数/">this指向与箭头函数</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/28/ElementUI列表无数据提示问题/">ElementUI列表无数据提示问题</a>
+          </li>
         
           <li>
             <a href="/2018/11/28/自动化测试小结/">自动化测试小结</a>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>this指向与箭头函数 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="以this的使用场景进行分类： 1.普通函数下，this 的指向 2.构造函数下，this 的指向 3.箭头函数下，this 的指向 普通函数下，this的指向（1）函数的定义位置不影响其this指向，this指向只和调用函数的对象有关。 （2）多层嵌套的对象，内部方法的this指向离被调用函数最近的对象（window也是对象，其内部对象调用方法的this指向内部对象， 而非window）。 （3">
+<meta property="og:type" content="article">
+<meta property="og:title" content="this指向与箭头函数">
+<meta property="og:url" content="http://yoursite.com/2018/11/28/this指向与箭头函数/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="以this的使用场景进行分类： 1.普通函数下，this 的指向 2.构造函数下，this 的指向 3.箭头函数下，this 的指向 普通函数下，this的指向（1）函数的定义位置不影响其this指向，this指向只和调用函数的对象有关。 （2）多层嵌套的对象，内部方法的this指向离被调用函数最近的对象（window也是对象，其内部对象调用方法的this指向内部对象， 而非window）。 （3">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-28T13:28:22.454Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="this指向与箭头函数">
+<meta name="twitter:description" content="以this的使用场景进行分类： 1.普通函数下，this 的指向 2.构造函数下，this 的指向 3.箭头函数下，this 的指向 普通函数下，this的指向（1）函数的定义位置不影响其this指向，this指向只和调用函数的对象有关。 （2）多层嵌套的对象，内部方法的this指向离被调用函数最近的对象（window也是对象，其内部对象调用方法的this指向内部对象， 而非window）。 （3">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-this指向与箭头函数" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/28/this指向与箭头函数/" class="article-date">
+  <time datetime="2018-11-28T13:27:36.000Z" itemprop="datePublished">2018-11-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      this指向与箭头函数
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>以this的使用场景进行分类：</p>
+<p>1.普通函数下，this 的指向</p>
+<p>2.构造函数下，this 的指向</p>
+<p>3.箭头函数下，this 的指向</p>
+<h3 id="普通函数下，this的指向"><a href="#普通函数下，this的指向" class="headerlink" title="普通函数下，this的指向"></a>普通函数下，this的指向</h3><p>（1）函数的定义位置不影响其this指向，this指向只和调用函数的对象有关。</p>
+<p>（2）多层嵌套的对象，内部方法的this指向离被调用函数最近的对象（window也是对象，其内部对象调用方法的this指向内部对象， 而非window）。</p>
+<p>（3）setTimeout &amp; setInterval 对于延时函数内部的回调函数的this指向全局对象window </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//时延函数的普通写法下的this指向</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>) </span>&#123;  </span><br><span class="line">    <span class="keyword">this</span>.age = <span class="number">0</span>;  </span><br><span class="line">    setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>);</span><br><span class="line">    &#125;, <span class="number">3000</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> Person();<span class="comment">//3秒后返回 window 对象</span></span><br></pre></td></tr></table></figure>
+<h3 id="构造函数下，this-的指向"><a href="#构造函数下，this-的指向" class="headerlink" title="构造函数下，this 的指向"></a>构造函数下，this 的指向</h3><p>（1）构造函数中的this与被创建的新对象绑定。 </p>
+<h3 id="箭头函数下，this-的指向"><a href="#箭头函数下，this-的指向" class="headerlink" title="箭头函数下，this 的指向"></a>箭头函数下，this 的指向</h3><p>（1）<strong>箭头函数不绑定this， 它会捕获其所在（即定义的位置）上下文的this值， 作为自己的this值</strong> </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>) </span>&#123;  </span><br><span class="line">    <span class="keyword">this</span>.age = <span class="number">0</span>;  </span><br><span class="line">    setInterval(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 回调里面的 `this` 变量就指向了期望的那个对象了</span></span><br><span class="line">        <span class="keyword">this</span>.age++;</span><br><span class="line">    &#125;, <span class="number">3000</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> Person(); <span class="comment">//三秒之后age变为1</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> adder = &#123;</span><br><span class="line">  base : <span class="number">1</span>,</span><br><span class="line">  add : <span class="function"><span class="keyword">function</span>(<span class="params">a</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> f = <span class="function"><span class="params">v</span> =&gt;</span> v + <span class="keyword">this</span>.base;</span><br><span class="line">    <span class="keyword">return</span> f(a);</span><br><span class="line">  &#125;,</span><br><span class="line">  addThruCall: <span class="function"><span class="keyword">function</span> <span class="title">inFun</span>(<span class="params">a</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> f = <span class="function"><span class="params">v</span> =&gt;</span> v + <span class="keyword">this</span>.base;</span><br><span class="line">    <span class="keyword">var</span> b = &#123;</span><br><span class="line">      base : <span class="number">2</span></span><br><span class="line">    &#125;;    </span><br><span class="line">    <span class="keyword">return</span> f.call(b, a);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(adder.add(<span class="number">1</span>));         <span class="comment">// 输出 2</span></span><br><span class="line"><span class="built_in">console</span>.log(adder.addThruCall(<span class="number">1</span>)); <span class="comment">// 仍然输出 2（而不是3，因为箭头函数不绑定this，其内部的this并没有因为call() 而改变，其this值仍然为函数inFun的this值，指向对象adder</span></span><br></pre></td></tr></table></figure>
+<p>（2）以上的箭头函数都是在方法内部，总之都是以非方法的方式使用，如果将箭头函数当做一个方法使用会怎样呢？ </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">  i: <span class="number">10</span>,</span><br><span class="line">  b: <span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="keyword">this</span>.i, <span class="keyword">this</span>),</span><br><span class="line">  c: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log( <span class="keyword">this</span>.i, <span class="keyword">this</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">obj.b();  <span class="comment">// undefined window&#123;...&#125;</span></span><br><span class="line">obj.c();  <span class="comment">// 10 Object &#123;...&#125;</span></span><br></pre></td></tr></table></figure>
+<p>作为方法的箭头函数this指向全局window对象，而普通函数则指向调用它的对象 。</p>
+<p><strong>ps: 最近遇到的一个小坑：当字符串为空时，split（）返回一个包含一个空字符串的数组，而不是一个空数组，如果字符串和分隔符都是空字符串，则返回一个空数组。</strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/11/28/this指向与箭头函数/" data-id="cjp17jy5200018khsypbyif2j" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/11/28/v-if和v-show的异同与踩坑记录/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          v-if和v-show的异同与踩坑记录
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/11/28/ElementUI列表无数据提示问题/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">ElementUI列表无数据提示问题</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/11/28/v-if和v-show的异同与踩坑记录/">v-if和v-show的异同与踩坑记录</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/28/this指向与箭头函数/">this指向与箭头函数</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/28/ElementUI列表无数据提示问题/">ElementUI列表无数据提示问题</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/28/自动化测试小结/">自动化测试小结</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
