@@ -110,7 +110,7 @@
 
   <meta name="description" content="1、默认的理论基础 执行上下文(Execution context)  函数调用栈(call stack)  队列数据结构(queue)  Promise  async/await   2、比较难懂的部分基础知识回顾（1）async/await与Promise的相互转化（这里主要关注的是await(thenable)这种情况下是如何转化为Promise的） async/await可视为 Promi">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="JavaScript事件循环详解">
 <meta property="og:url" content="http://yoursite.com/2019/02/13/JavaScript事件循环详解/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="1、默认的理论基础 执行上下文(Execution context)  函数调用栈(call stack)  队列数据结构(queue)  Promise  async/await   2、比较难懂的部分基础知识回顾（1）async/await与Promise的相互转化（这里主要关注的是await(thenable)这种情况下是如何转化为Promise的） async/await可视为 Promi">
@@ -125,9 +125,9 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14720179-ef7e7cdab246ed7b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14720179-69af3cd17e941127.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14720179-80ad486a874932a8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-02-13T13:42:38.836Z">
+<meta property="og:updated_time" content="2019-02-13T13:48:37.349Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="JavaScript事件循环详解">
 <meta name="twitter:description" content="1、默认的理论基础 执行上下文(Execution context)  函数调用栈(call stack)  队列数据结构(queue)  Promise  async/await   2、比较难懂的部分基础知识回顾（1）async/await与Promise的相互转化（这里主要关注的是await(thenable)这种情况下是如何转化为Promise的） async/await可视为 Promi">
 <meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/14720179-d16100d398411e49.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
@@ -146,7 +146,7 @@
   };
 </script>
 
-  <title> | Hexo</title>
+  <title>JavaScript事件循环详解 | Hexo</title>
   
 
 
@@ -328,7 +328,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h1 class="post-title" itemprop="name headline">JavaScript事件循环详解
               
             
           </h1>
@@ -353,9 +353,13 @@
                 
               
 
-              <time title="创建时间：2019-02-13 21:42:38" itemprop="dateCreated datePublished" datetime="2019-02-13T21:42:38+08:00">2019-02-13</time>
+              <time title="创建时间：2019-02-13 21:48:06 / 修改时间：21:48:37" itemprop="dateCreated datePublished" datetime="2019-02-13T21:48:06+08:00">2019-02-13</time>
             
 
+            
+              
+
+              
             
           </span>
 
