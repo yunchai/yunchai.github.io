@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.5.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.5.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.5.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.5.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="1.任务划分（1）实现数据绑定，实现View和Model的绑定，View中与Model相关的节点，可以完成初始化。 （2）实现Model随View的变化而变化，简称Model动态响应View。 （3）实现View随Model的变化而变化，简称View动态响应Model。 2.实现数据绑定 任务描述 12345678910111213&amp;lt;div id=&apos;chai&apos;&amp;gt;  &amp;lt;input">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue双向绑定的简单实现和详细注释">
+<meta property="og:url" content="http://yoursite.com/2019/02/20/Vue双向绑定的简单实现和详细注释/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1.任务划分（1）实现数据绑定，实现View和Model的绑定，View中与Model相关的节点，可以完成初始化。 （2）实现Model随View的变化而变化，简称Model动态响应View。 （3）实现View随Model的变化而变化，简称View动态响应Model。 2.实现数据绑定 任务描述 12345678910111213&amp;lt;div id=&apos;chai&apos;&amp;gt;  &amp;lt;input">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14720179-b528e16e23eff6cb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14720179-43a6ce10bac0269e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14720179-cfdc84b6c0e5fb08.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-02-20T12:29:01.143Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vue双向绑定的简单实现和详细注释">
+<meta name="twitter:description" content="1.任务划分（1）实现数据绑定，实现View和Model的绑定，View中与Model相关的节点，可以完成初始化。 （2）实现Model随View的变化而变化，简称Model动态响应View。 （3）实现View随Model的变化而变化，简称View动态响应Model。 2.实现数据绑定 任务描述 12345678910111213&amp;lt;div id=&apos;chai&apos;&amp;gt;  &amp;lt;input">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/14720179-b528e16e23eff6cb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/02/20/Vue双向绑定的简单实现和详细注释/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Vue双向绑定的简单实现和详细注释 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/20/Vue双向绑定的简单实现和详细注释/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Vue双向绑定的简单实现和详细注释
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-02-20 20:23:14 / 修改时间：20:29:01" itemprop="dateCreated datePublished" datetime="2019-02-20T20:23:14+08:00">2019-02-20</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="1-任务划分"><a href="#1-任务划分" class="headerlink" title="1.任务划分"></a>1.任务划分</h3><p>（1）实现数据绑定，实现View和Model的绑定，View中与Model相关的节点，可以完成初始化。</p>
+<p>（2）实现Model随View的变化而变化，简称Model动态响应View。</p>
+<p>（3）实现View随Model的变化而变化，简称View动态响应Model。<br><img src="https://upload-images.jianshu.io/upload_images/14720179-b528e16e23eff6cb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="流程图.png"></p>
+<h3 id="2-实现数据绑定"><a href="#2-实现数据绑定" class="headerlink" title="2.实现数据绑定"></a>2.实现数据绑定</h3><ul>
+<li><p>任务描述</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">'chai'</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">'in'</span> <span class="attr">v-model</span>=<span class="string">"test"</span>&gt;</span></span><br><span class="line">  &#123;&#123;test&#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">  var vm = new Vue(&#123;</span></span><br><span class="line"><span class="undefined">    el: 'chai',</span></span><br><span class="line"><span class="undefined">    data: &#123;</span></span><br><span class="line"><span class="undefined">      test: 'hello two_way'</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">  &#125;)</span></span><br><span class="line"><span class="undefined"> </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>希望实现，上面这段html页面打开时可以初始化DIV的值和的值，如下图所示：<br><img src="https://upload-images.jianshu.io/upload_images/14720179-43a6ce10bac0269e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="初始化.png"></p>
+</li>
+</ul>
+<p>主要的功能模块</p>
+<p>（1）Dom劫持</p>
+<p>利用DocumentFragment劫持你想要处理的元素，可以将DocumentFragment简单理解为一个Dom容器，将处理过后的节点存入这个容器中，待所有节点处理完毕之后，再将容器中的所有的节点利用appendChild方法重新插入到响应的根节点之中。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//劫持你想要处理的元素，将元素外部的包裹元素传入</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">domToFragment</span>(<span class="params">node,vm</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> domf = <span class="built_in">document</span>.createDocumentFragment();</span><br><span class="line">    <span class="keyword">var</span> child;</span><br><span class="line">    <span class="keyword">while</span>(child = node.firstChild)&#123;</span><br><span class="line">      <span class="comment">//compile(child, vm);     //将dom和vue实例中的data相互关联</span></span><br><span class="line">      domf.appendChild(child);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> domf;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>显而易见，上面这个方法，当你将根节点作为入参时，该方法会对根节点下的所有子节点一一处理（这里的compile方法就是编译DOM，将其与Model相互关联，下一步讲解），最后再将存有编译后的所有子节点的容器返回。</p>
+<p>（2）编译DOM</p>
+<p>这部分，主要是针对不同类型的DOM，对其进行分别进行处理，并将其关联的Model的值赋予给相关的Dom。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">compile</span>(<span class="params">node, vm</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> reg = <span class="regexp">/\&#123;\&#123;(.*)\&#125;\&#125;/</span>;<span class="comment">//能够匹配&#123;&#123;test&#125;&#125;这种dom的正则</span></span><br><span class="line">    <span class="comment">//依据节点的类型做不同的处理</span></span><br><span class="line">    <span class="comment">//若节点为一般普通元素</span></span><br><span class="line">    <span class="keyword">if</span>(node.nodeType === <span class="number">1</span>)&#123;</span><br><span class="line">      <span class="keyword">var</span> attr = node.attributes;<span class="comment">//得到该元素的所有属性</span></span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>;i&lt;attr.length;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(attr[i].nodeName === <span class="string">'v-model'</span>)&#123;</span><br><span class="line">          <span class="keyword">let</span> name = attr[i].nodeValue;</span><br><span class="line">          node.value = vm.data[name];</span><br><span class="line">          node.removeAttribute(<span class="string">'v-model'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//节点类型是text。也就是&#123;&#123;...&#125;&#125;这种形式的话</span></span><br><span class="line">    <span class="keyword">if</span>(node.nodeType === <span class="number">3</span>)&#123;</span><br><span class="line">      <span class="keyword">if</span>(reg.test(node.nodeValue))&#123;</span><br><span class="line">        <span class="keyword">var</span> name = <span class="built_in">RegExp</span>.$<span class="number">1</span>;</span><br><span class="line">        name = name.trim();</span><br><span class="line">        node.nodeValue = vm.data[name];</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>显而易见，上面的compile方法中以node.nodeType为区分，分别进行处理，并将Model的值赋予给不同的节点，以本文的示例来说，input就是属于node.nodeType = 1，就是属于node.nodeType = 2。</p>
+<p>（3）Vue的构造函数</p>
+<p>这部分主要就是将根节点下面的所有子节点进行编译，编译后再重新插入到根节点下面。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Vue</span>(<span class="params">options</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.data = options.data;</span><br><span class="line">    <span class="keyword">this</span>.id = options.el;</span><br><span class="line">    <span class="keyword">var</span> root = <span class="built_in">document</span>.getElementById(<span class="string">'chai'</span>);</span><br><span class="line">    <span class="keyword">var</span> dom = domToFragment(root, <span class="keyword">this</span>);</span><br><span class="line">    root.appendChild(dom);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>由此已经实现了数据绑定，可以讲这几段代码复制到一块，看书否可以达到我们在这一节开头的期望结果，完成数据的初始化。</p>
+<h3 id="3-实现Model动态响应View"><a href="#3-实现Model动态响应View" class="headerlink" title="3.实现Model动态响应View"></a>3.实现Model动态响应View</h3><ul>
+<li>任务描述</li>
+</ul>
+<p>以本文的示例来说，就是当你在input框中改变其值时，其利用v-model关联的Model的值也随之改变，显然这里需要用到Dom监听，再进一步思考平日里我们使用vue的时候，若需要取data中的test属性的值，会使用this.test，但是仔细一想Vue实例中并没有test这个属性，那么为什么this.test可以取到data中的值呢？这里用到的是Object.defineProperty这个方法，在定义访问器属性的时候将data中的属性与Vue实例中的属性相互关联。</p>
+<p>（1）监听Dom的input事件</p>
+<p>为input加上监听器，当输入值的同时改变Model的值。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">compile</span>(<span class="params">node, vm</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> reg = <span class="regexp">/\&#123;\&#123;(.*)\&#125;\&#125;/</span>;<span class="comment">//能够匹配&#123;&#123;test&#125;&#125;这种dom的正则</span></span><br><span class="line">    <span class="comment">//依据节点的类型做不同的处理</span></span><br><span class="line">    <span class="comment">//若节点为一般普通元素</span></span><br><span class="line">    <span class="keyword">if</span>(node.nodeType === <span class="number">1</span>)&#123;</span><br><span class="line">      <span class="keyword">var</span> attr = node.attributes;<span class="comment">//得到该元素的所有属性</span></span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>;i&lt;attr.length;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(attr[i].nodeName === <span class="string">'v-model'</span>)&#123;</span><br><span class="line">          <span class="keyword">let</span> name = attr[i].nodeValue;</span><br><span class="line"><span class="comment">//************以下新增代码**************</span></span><br><span class="line">          <span class="comment">//添加dom监听，将发生变化的dom的值赋给vue实例</span></span><br><span class="line">          node.addEventListener(<span class="string">'input'</span>, e =&gt; &#123;</span><br><span class="line">            vm.data[name] = e.target.value;</span><br><span class="line">          &#125;)</span><br><span class="line"><span class="comment">//************以上新增代码**************</span></span><br><span class="line">		 node.value = vm.data[name];</span><br><span class="line">          node.removeAttribute(<span class="string">'v-model'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>显而易见，当监听到输入时，将Model更新为最新的输入值。</p>
+<p>（2）关联Vue实例属性和data属性</p>
+<p>这部分主要是利用Object.defineProperty定义访问器属性的时候，将两者关联。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义访问器属性</span></span><br><span class="line">   <span class="function"><span class="keyword">function</span> <span class="title">defProperty</span>(<span class="params">obj, key, val</span>) </span>&#123;</span><br><span class="line">     <span class="built_in">Object</span>.defineProperty(obj, key, &#123;</span><br><span class="line">       get: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">         <span class="keyword">return</span> val;</span><br><span class="line">       &#125;,</span><br><span class="line">       set: <span class="function"><span class="keyword">function</span>(<span class="params">newVal</span>)</span>&#123;</span><br><span class="line">         <span class="keyword">if</span>(newVal === val) <span class="keyword">return</span>;</span><br><span class="line">         val = newVal;</span><br><span class="line">         <span class="built_in">console</span>.log(val)</span><br><span class="line">       &#125;</span><br><span class="line">     &#125;)</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   <span class="comment">//将对于data中属性的操作都转化为对vm属性的操作，所以，原本vm.data[key]就可以直接写		为vm.key这种直接的形式</span></span><br><span class="line">   <span class="function"><span class="keyword">function</span> <span class="title">translateDataToVm</span>(<span class="params">obj,vm</span>) </span>&#123;</span><br><span class="line">     <span class="built_in">Object</span>.keys(obj).forEach(<span class="function"><span class="params">key</span> =&gt;</span> &#123;</span><br><span class="line">       defProperty(vm, key, obj[key])</span><br><span class="line">     &#125;);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>简单理解上面的方法就是当你调用this.test取值的时候，会执行Vue实例的get方法，而在get方法中返回的就是data中的test属性的值。当你调用this.test赋值的时候，会执行Vue实例的set方法，在这个方法中对data的test属性进行赋值。</p>
+<p>所以编译代码要进一步优化，所有取值、赋值的操作都不需要再调用vm.data[name]，而是直接使用vm.name。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">compile</span>(<span class="params">node, vm</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> reg = <span class="regexp">/\&#123;\&#123;(.*)\&#125;\&#125;/</span>;<span class="comment">//能够匹配&#123;&#123;test&#125;&#125;这种dom的正则</span></span><br><span class="line">    <span class="comment">//依据节点的类型做不同的处理</span></span><br><span class="line">    <span class="comment">//若节点为一般普通元素</span></span><br><span class="line">    <span class="keyword">if</span>(node.nodeType === <span class="number">1</span>)&#123;</span><br><span class="line">      <span class="keyword">var</span> attr = node.attributes;<span class="comment">//得到该元素的所有属性</span></span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>;i&lt;attr.length;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(attr[i].nodeName === <span class="string">'v-model'</span>)&#123;</span><br><span class="line">          <span class="keyword">let</span> name = attr[i].nodeValue;</span><br><span class="line"></span><br><span class="line"><span class="comment">//************以下新增代码**************</span></span><br><span class="line">          <span class="comment">//添加dom监听，将发生变化的dom的值赋给vue实例</span></span><br><span class="line">          node.addEventListener(<span class="string">'input'</span>, e =&gt; &#123;</span><br><span class="line">            vm[name] = e.target.value;</span><br><span class="line">          &#125;)</span><br><span class="line"><span class="comment">//************以上新增代码**************</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//************以下变化代码**************</span></span><br><span class="line">          node.value = vm[name];</span><br><span class="line"><span class="comment">//************以上变化代码**************</span></span><br><span class="line"></span><br><span class="line">          node.removeAttribute(<span class="string">'v-model'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//节点类型是text。也就是&#123;&#123;...&#125;&#125;这种形式的话</span></span><br><span class="line">    <span class="keyword">if</span>(node.nodeType === <span class="number">3</span>)&#123;</span><br><span class="line">      <span class="keyword">if</span>(reg.test(node.nodeValue))&#123;</span><br><span class="line">        <span class="keyword">var</span> name = <span class="built_in">RegExp</span>.$<span class="number">1</span>;</span><br><span class="line">        name = name.trim();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//************以下变化代码**************</span></span><br><span class="line">        node.nodeValue = vm[name];</span><br><span class="line">        <span class="comment">//************以上变化代码**************</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>这一部分的最后一步就是在构造函数中调用translateDataToVm方法将Vue实例的属性与data的属性相互关联。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Vue</span>(<span class="params">options</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.data = options.data;</span><br><span class="line">    <span class="keyword">this</span>.id = options.el;</span><br><span class="line"></span><br><span class="line"><span class="comment">//************以下新增代码**************</span></span><br><span class="line">    <span class="comment">//为vm实例添加访问器属性，对vm的相关属性的读写都会与data中的属性相互关联</span></span><br><span class="line">    translateDataToVm(<span class="keyword">this</span>.data, <span class="keyword">this</span>);</span><br><span class="line"><span class="comment">//************以上新增代码**************</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> root = <span class="built_in">document</span>.getElementById(<span class="string">'chai'</span>)</span><br><span class="line">    <span class="keyword">var</span> dom = domToFragment(root, <span class="keyword">this</span>);</span><br><span class="line">    root.appendChild(dom);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>4.实现View动态响应Model</p>
+<ul>
+<li>任务描述</li>
+</ul>
+<p>这部分主要是利用发布-订阅模式，当Model发生改变时，发布者会通知所有订阅了该主题的订阅者进行更新。这里的主题就是Model（本文中的test），订阅者指的就是每一个与Model相互关联的Dom节点（input和），可能有多个节点都关联了一个Model，所以这些订阅者应该统一管理（放入一个数组中），于是可以看出，对于不同Model的订阅者应该是管理在不同的数组中，当Model发生变化时，通知对应的数组中的每一个订阅者更新自己的值。<br><img src="https://upload-images.jianshu.io/upload_images/14720179-cfdc84b6c0e5fb08.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="订阅发布模式图解.png"></p>
+<p>（1）订阅者定义</p>
+<p>订阅者无非就是得到发布者的指示之后更新自己的数据，其中最需要注意的一点是，需要有一个标志位来明确只有在订阅者初始化的时候才会将自己放入到某个主题的订阅数组之中。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Watcher</span>(<span class="params">vm, node, name</span>)</span>&#123;</span><br><span class="line">    Subscripters.target = <span class="keyword">this</span>;<span class="comment">//Subscripters大兄弟，我是'name'的订阅者，初来乍到，记得把我加入到主	   	   题'name'的数组中哦。</span></span><br><span class="line">    <span class="keyword">this</span>.vm = vm;</span><br><span class="line">    <span class="keyword">this</span>.node = node;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">    <span class="keyword">this</span>.update();<span class="comment">//这一步主要完成更新和加入更新数组</span></span><br><span class="line">    Subscripters.target = <span class="literal">null</span>;<span class="comment">//Subscripters大兄弟，你既然已经把我加入了主题'name'的更新数组，那么下次	 执行update方法的时候就不需要再加入一次啦！！</span></span><br><span class="line">  &#125;</span><br><span class="line">  Watcher.prototype = &#123;</span><br><span class="line">    update: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">//这一步会触发vm的访问器属性，进而将watcher放入观察者的队列（只有在watcher初始化的时候会有放入队列这个	操作，所以在放入时需要做一下判断）</span></span><br><span class="line">    <span class="keyword">this</span>.node.nodeValue = <span class="keyword">this</span>.vm[<span class="keyword">this</span>.name];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>Subscripters.target作为订阅者和发布者的一次对话：这段对话在代码中写的很清楚。</p>
+<p>（2）发布者定义</p>
+<p>发布者无非就是将订阅者加入到对应主题的更新数组之中，然后在主题内容发生更新之后通知对应的更新数组更新自己的内容。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这个构造方法主要是维护订阅者的队列</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Subscripters</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.target = <span class="literal">null</span>; <span class="comment">//初始化时置为空，只有在订阅者初始化的时候才会有值</span></span><br><span class="line">  <span class="keyword">this</span>.subs = [];<span class="comment">//主题的更新数组</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Subscripters.prototype = &#123;</span><br><span class="line">  <span class="comment">//将订阅者添加到主题更新数组中</span></span><br><span class="line">  addSubs: <span class="function"><span class="keyword">function</span>(<span class="params">sub</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.subs.push(sub)</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">//通知更新数组完成更新</span></span><br><span class="line">  notify: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.subs.forEach(<span class="function"><span class="params">sub</span> =&gt;</span> &#123;</span><br><span class="line">      sub.update();</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>与此同时，编译方法中的更新步骤就可以由订阅者的初始化完成。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//编译以及实现数据绑定和dom监听</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">compile</span>(<span class="params">node, vm</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> reg = <span class="regexp">/\&#123;\&#123;(.*)\&#125;\&#125;/</span>;<span class="comment">//能够匹配&#123;&#123;test&#125;&#125;这种dom的正则</span></span><br><span class="line">    <span class="comment">//依据节点的类型做不同的处理</span></span><br><span class="line">    <span class="comment">//若节点为一般普通元素</span></span><br><span class="line">    <span class="keyword">if</span>(node.nodeType === <span class="number">1</span>)&#123;</span><br><span class="line">      <span class="keyword">var</span> attr = node.attributes;<span class="comment">//得到该元素的所有属性</span></span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>;i&lt;attr.length;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(attr[i].nodeName === <span class="string">'v-model'</span>)&#123;</span><br><span class="line">          <span class="keyword">let</span> name = attr[i].nodeValue;</span><br><span class="line">          <span class="comment">//添加dom监听，将发生变化的dom的值赋给vue实例</span></span><br><span class="line">          node.addEventListener(<span class="string">'input'</span>, e =&gt; &#123;</span><br><span class="line">            vm[name] = e.target.value;</span><br><span class="line">          &#125;)</span><br><span class="line"><span class="comment">//****************以下变化代码****************</span></span><br><span class="line">          <span class="comment">//node.value = vm[name];</span></span><br><span class="line">          <span class="keyword">new</span> Watcher(vm, node, name);</span><br><span class="line"><span class="comment">//****************以上变化代码****************</span></span><br><span class="line">          node.removeAttribute(<span class="string">'v-model'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//节点类型是text。也就是&#123;&#123;...&#125;&#125;这种形式的话</span></span><br><span class="line">    <span class="keyword">if</span>(node.nodeType === <span class="number">3</span>)&#123;</span><br><span class="line">      <span class="keyword">if</span>(reg.test(node.nodeValue))&#123;</span><br><span class="line">        <span class="keyword">var</span> name = <span class="built_in">RegExp</span>.$<span class="number">1</span>;</span><br><span class="line">        name = name.trim();</span><br><span class="line"><span class="comment">//****************以下变化代码****************</span></span><br><span class="line">        <span class="comment">//执行watcher构造函数需要完成的工作：</span></span><br><span class="line">        <span class="comment">//1、获取model的值并赋给该文本节点</span></span><br><span class="line">        <span class="comment">//2、将自己添加到订阅者的队列中</span></span><br><span class="line">        <span class="keyword">new</span> Watcher(vm, node, name);</span><br><span class="line"><span class="comment">//****************以上变化代码****************</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>究竟什么时候是添加订阅者到更新数组的好时机，又什么时候是通知订阅者更新的好时机？这就要用到访问器属性。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义访问器属性</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">defProperty</span>(<span class="params">obj, key, val</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> subscripters = <span class="keyword">new</span> Subscripters();</span><br><span class="line">    <span class="built_in">Object</span>.defineProperty(obj, key, &#123;</span><br><span class="line">      get: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="comment">//***************以下新增代码********************</span></span><br><span class="line">        <span class="comment">//将订阅了这个属性的订阅者放入到这个属性对应的队列中，有了这个if判断就可以保证只有在watcher初始化		 的时候才会有加入队列这个动作，保证不会重复加入</span></span><br><span class="line">        <span class="keyword">if</span>(Subscripters.target != <span class="literal">null</span>)&#123;</span><br><span class="line">          subscripters.addSubs(Subscripters.target);</span><br><span class="line">        &#125;</span><br><span class="line"><span class="comment">//***************以上新增代码********************</span></span><br><span class="line">        <span class="keyword">return</span> val;</span><br><span class="line">      &#125;,</span><br><span class="line">      set: <span class="function"><span class="keyword">function</span>(<span class="params">newVal</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(newVal === val) <span class="keyword">return</span>;</span><br><span class="line">        val = newVal;</span><br><span class="line"><span class="comment">//****************以下变化代码****************</span></span><br><span class="line">        subscripters.notify();<span class="comment">//通知更新</span></span><br><span class="line"><span class="comment">//****************以上变化代码****************</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>至此都已完成。详细代码可以去到github上下载查看。若有什么问题可以给我留言，会及时回复。觉得值得鼓励的，给个赞哦。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/13/JavaScript事件循环详解/" rel="next" title="JavaScript事件循环详解">
+                <i class="fa fa-chevron-left"></i> JavaScript事件循环详解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-任务划分"><span class="nav-number">1.</span> <span class="nav-text">1.任务划分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-实现数据绑定"><span class="nav-number">2.</span> <span class="nav-text">2.实现数据绑定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-实现Model动态响应View"><span class="nav-number">3.</span> <span class="nav-text">3.实现Model动态响应View</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.5.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.5.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
