@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.5.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.5.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.5.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.5.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="问：下面这段代码会带来什么问题： 123456789101112131415161718192021&amp;lt;body&amp;gt;    &amp;lt;form action=&quot;&quot;&amp;gt;        你的爱好是：&amp;lt;br&amp;gt;        &amp;lt;input type=&quot;checkbox&quot; name=&quot;items&quot; value=&quot;篮球&quot;/&amp;gt;篮球        &amp;lt;input type=&quot;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="attribute and property">
+<meta property="og:url" content="http://yoursite.com/2019/04/01/attribute-and-property/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="问：下面这段代码会带来什么问题： 123456789101112131415161718192021&amp;lt;body&amp;gt;    &amp;lt;form action=&quot;&quot;&amp;gt;        你的爱好是：&amp;lt;br&amp;gt;        &amp;lt;input type=&quot;checkbox&quot; name=&quot;items&quot; value=&quot;篮球&quot;/&amp;gt;篮球        &amp;lt;input type=&quot;">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14720179-b88993d669c5671b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14720179-f30b7cf3144b6ba7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14720179-5911e5d52d91e7bd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14720179-f4368207d3de3946.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-04-01T07:59:29.059Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="attribute and property">
+<meta name="twitter:description" content="问：下面这段代码会带来什么问题： 123456789101112131415161718192021&amp;lt;body&amp;gt;    &amp;lt;form action=&quot;&quot;&amp;gt;        你的爱好是：&amp;lt;br&amp;gt;        &amp;lt;input type=&quot;checkbox&quot; name=&quot;items&quot; value=&quot;篮球&quot;/&amp;gt;篮球        &amp;lt;input type=&quot;">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/14720179-b88993d669c5671b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/04/01/attribute-and-property/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>attribute and property | Hexo</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/01/attribute-and-property/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">attribute and property
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-01 15:58:38 / 修改时间：15:59:29" itemprop="dateCreated datePublished" datetime="2019-04-01T15:58:38+08:00">2019-04-01</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="问："><a href="#问：" class="headerlink" title="问："></a><strong>问</strong>：</h1><p>下面这段代码会带来什么问题：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">""</span>&gt;</span></span><br><span class="line">        你的爱好是：<span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">name</span>=<span class="string">"items"</span> <span class="attr">value</span>=<span class="string">"篮球"</span>/&gt;</span>篮球</span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">name</span>=<span class="string">"items"</span> <span class="attr">value</span>=<span class="string">"足球"</span>/&gt;</span>足球</span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">name</span>=<span class="string">"items"</span> <span class="attr">value</span>=<span class="string">"乒乓球"</span>/&gt;</span>乒乓球</span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">name</span>=<span class="string">"items"</span> <span class="attr">value</span>=<span class="string">"水球"</span>/&gt;</span>水球</span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">name</span>=<span class="string">"items"</span> <span class="attr">value</span>=<span class="string">"玻璃球"</span>/&gt;</span>玻璃球</span><br><span class="line">        <span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">id</span>=<span class="string">"checkAll"</span> <span class="attr">value</span>=<span class="string">"全选"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> checkAll = <span class="built_in">document</span>.getElementById(<span class="string">"checkAll"</span>);</span></span><br><span class="line"><span class="javascript">        checkAll.onclick = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> checkBoxes = <span class="built_in">document</span>.getElementsByName(<span class="string">"items"</span>);</span></span><br><span class="line"><span class="javascript">            <span class="keyword">for</span>(i <span class="keyword">in</span> checkBoxes)&#123;</span></span><br><span class="line"><span class="javascript">                checkBoxes[i].setAttribute(<span class="string">'checked'</span>,<span class="string">'checked'</span>);</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="1-不要混淆JS和HTML的语法"><a href="#1-不要混淆JS和HTML的语法" class="headerlink" title="1.不要混淆JS和HTML的语法"></a>1.不要混淆JS和HTML的语法</h3><p>看下面的这段代码。你认为输出的结果是什么？</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">checked</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">checked</span>=<span class="string">0/</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">checked</span>=<span class="string">''</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">checked</span>=<span class="string">undefined/</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">checked</span>=<span class="string">null/</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">checked</span>=<span class="string">'checked'</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">checked</span>=<span class="string">true/</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">checked</span>=<span class="string">false/</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>HTML会将看到的这些值都转化为字符串：<img src="https://upload-images.jianshu.io/upload_images/14720179-b88993d669c5671b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="question_result.png"></p>
+<p>相应的页面结果，大家可以去试一下，所有的复选框都被选中了。</p>
+<h3 id="2-预定义属性和自定义属性的差别以及区别property和attribute"><a href="#2-预定义属性和自定义属性的差别以及区别property和attribute" class="headerlink" title="2.预定义属性和自定义属性的差别以及区别property和attribute"></a>2.预定义属性和自定义属性的差别以及区别<code>property</code>和<code>attribute</code></h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">class</span>=<span class="string">"input"</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">checked</span>=<span class="string">'checked'</span> <span class="attr">chai</span>=<span class="string">"chai"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这里的<code>checked</code>属性就是预定义的属性，<code>chai</code>就是自定义的属性。此时的他们从HTML的角度来说只能算是<code>attribute</code>，只有打印出来之后，从JS的角度去看，才能有<code>property</code>和<code>attribute</code>之分。</p>
+<p>所谓property是指：JS原生对象的直接属性。</p>
+<p>具体的有什么区别你是否清楚呢？</p>
+<p>我们将这个<code>input</code>标签打印出来看一下其中的<code>attributes</code>：<img src="https://upload-images.jianshu.io/upload_images/14720179-f30b7cf3144b6ba7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="attrs.png"></p>
+<p>可以看到这个input上面的所有的属性都会出现在<code>attributes</code>中，这四个准确的说是属性节点，展开后会发现里面都会有比较重要的三个属性：<img src="https://upload-images.jianshu.io/upload_images/14720179-5911e5d52d91e7bd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="属性节点的重要属性.png"></p>
+<p>进一步观察除了<code>chai</code>之外的三个属性也都出现在了与<code>attributes</code>同级的prop之中，这只说明了一点自定义的属性不会出现在最外层的prop之中。</p>
+<p>上面的<code>attributes</code>以及与之同层级的prop都属于我们通过<code>document.getElementsByClass(&#39;input&#39;)[0]</code>的<code>property</code>。</p>
+<p>由此知道：每一个预定义的<code>attribute</code>都有一个<code>property</code>与之对应</p>
+<h3 id="3-attribute和property之间的相互影响"><a href="#3-attribute和property之间的相互影响" class="headerlink" title="3.attribute和property之间的相互影响"></a>3.<code>attribute</code>和<code>property</code>之间的相互影响</h3><p>布尔值属性和非布尔值属性：若<code>property</code>是布尔值，那么就是布尔值属性，<code>property</code>是非布尔值，则是非布尔值属性。</p>
+<p>（1）非布尔值属性</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">'checkTest'</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">checked</span>=<span class="string">'checked'</span> <span class="attr">name</span>=<span class="string">'chaiCheck'</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">        <span class="keyword">debugger</span></span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> el = <span class="built_in">document</span>.getElementById(<span class="string">'checkTest'</span>)</span></span><br><span class="line"><span class="javascript">        el.setAttribute(<span class="string">'name'</span>,<span class="string">'setAttribute1'</span>);</span></span><br><span class="line"><span class="javascript">        el.setAttribute(<span class="string">'name'</span>,<span class="string">'setAttribute2'</span>);</span></span><br><span class="line"><span class="javascript">        el.setAttribute(<span class="string">'name'</span>,<span class="string">'setAttribute3'</span>);</span></span><br><span class="line"><span class="javascript">        el.name = <span class="string">'setProp1'</span>;</span></span><br><span class="line"><span class="javascript">        el.name = <span class="string">'setProp2'</span>;</span></span><br><span class="line"><span class="javascript">        el.name = <span class="string">'setProp3'</span>;</span></span><br><span class="line"><span class="javascript">        el.setAttribute(<span class="string">'name'</span>,<span class="string">'setAttribute4'</span>);</span></span><br><span class="line"><span class="javascript">        el.setAttribute(<span class="string">'name'</span>,<span class="string">'setAttribute5'</span>);</span></span><br><span class="line"><span class="javascript">        el.setAttribute(<span class="string">'name'</span>,<span class="string">'setAttribute6'</span>);</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在我们改变<code>attribute</code>和<code>property</code>时，对方是否会同步更改？<img src="https://upload-images.jianshu.io/upload_images/14720179-f4368207d3de3946.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="非布尔值属性结果.png"></p>
+<p>实验证明在这个过程中，不论是修改<code>attribute</code>还是<code>property</code>，彼此都会同步更新。</p>
+<p>（2）布尔值属性</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">'checkTest'</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">checked</span>=<span class="string">'checked'</span> <span class="attr">name</span>=<span class="string">'chaiCheck'</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">        <span class="keyword">debugger</span></span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> el = <span class="built_in">document</span>.getElementById(<span class="string">'checkTest'</span>)</span></span><br><span class="line"><span class="javascript">        el.setAttribute(<span class="string">'checked'</span>,<span class="string">'setAttribute1'</span>);</span></span><br><span class="line"><span class="javascript">        el.setAttribute(<span class="string">'checked'</span>,<span class="string">'setAttribute2'</span>);</span></span><br><span class="line"><span class="javascript">        el.setAttribute(<span class="string">'checked'</span>,<span class="string">'setAttribute3'</span>);</span></span><br><span class="line"><span class="javascript">        el.checked = <span class="literal">false</span>;</span></span><br><span class="line"><span class="javascript">        el.setAttribute(<span class="string">'checked'</span>,<span class="string">'setAttribute4'</span>);</span></span><br><span class="line"><span class="javascript">        el.setAttribute(<span class="string">'checked'</span>,<span class="string">'setAttribute5'</span>);</span></span><br><span class="line"><span class="javascript">        el.setAttribute(<span class="string">'checked'</span>,<span class="string">'setAttribute6'</span>);</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>看一下运行的整个过程会发现<code>property</code>只有在<code>el.checked = false;</code>这一步的时候变为<code>false</code>，其他时刻都没有改变，这也就意味着当修改布尔值属性的<code>attribute</code>时，是不会同时更改<code>property</code>的。</p>
+<p>备注：下面的这段代码的执行过程的不同：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">'checkTest'</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">name</span>=<span class="string">'chaiCheck'</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">        <span class="keyword">debugger</span></span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> el = <span class="built_in">document</span>.getElementById(<span class="string">'checkTest'</span>)</span></span><br><span class="line"><span class="javascript">        el.setAttribute(<span class="string">'checked'</span>,<span class="string">'setAttribute1'</span>);</span></span><br><span class="line"><span class="javascript">        el.setAttribute(<span class="string">'checked'</span>,<span class="string">'setAttribute2'</span>);</span></span><br><span class="line"><span class="javascript">        el.setAttribute(<span class="string">'checked'</span>,<span class="string">'setAttribute3'</span>);</span></span><br><span class="line"><span class="javascript">        el.checked = <span class="string">'setProp1'</span>;</span></span><br><span class="line"><span class="javascript">        el.checked = <span class="string">'setProp2'</span>;</span></span><br><span class="line"><span class="javascript">        el.checked = <span class="string">'setProp3'</span>;</span></span><br><span class="line"><span class="javascript">        el.setAttribute(<span class="string">'checked'</span>,<span class="string">'setAttribute4'</span>);</span></span><br><span class="line"><span class="javascript">        el.setAttribute(<span class="string">'checked'</span>,<span class="string">'setAttribute5'</span>);</span></span><br><span class="line"><span class="javascript">        el.setAttribute(<span class="string">'checked'</span>,<span class="string">'setAttribute6'</span>);</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>若一开始就没有为<code>checked</code>赋值,那么在第一次<code>setAttribute</code>的时候，<code>property</code>会同步更新为true.</p>
+<p>上面几个例子，请详细在控制台查看运行的过程。</p>
+<p>结论：</p>
+<p>非布尔值属性：<code>attribute</code>和<code>property</code>会相互同步</p>
+<p>布尔值属性：<1>改变<code>property</code>不会影响<code>attribute</code>.<2>没有动过<code>property</code>时，修改<code>attribute</code>会影响<code>property</code>，动过<code>property</code>后，修改<code>attribute</code>不再对<code>property</code>有影响。</2></1></p>
+<p>4.浏览器究竟是认<code>attribute</code>还是<code>property</code></p>
+<p>这里可以由你们自己去做实验，我这边给出结论：不管是浏览器还是用户在界面上面的操作，都是针对的<code>property</code>。</p>
+<p>END</p>
+<p>至此，你是否可以对文章开头的那段代码提出质疑，并给出理由了？</p>
+<p>有任何问题，欢迎留言！也欢迎各位同学点个赞哦！！</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/20/Vue双向绑定的简单实现和详细注释/" rel="next" title="Vue双向绑定的简单实现和详细注释">
+                <i class="fa fa-chevron-left"></i> Vue双向绑定的简单实现和详细注释
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#问："><span class="nav-number">1.</span> <span class="nav-text">问：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-不要混淆JS和HTML的语法"><span class="nav-number">1.0.1.</span> <span class="nav-text">1.不要混淆JS和HTML的语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-预定义属性和自定义属性的差别以及区别property和attribute"><span class="nav-number">1.0.2.</span> <span class="nav-text">2.预定义属性和自定义属性的差别以及区别property和attribute</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-attribute和property之间的相互影响"><span class="nav-number">1.0.3.</span> <span class="nav-text">3.attribute和property之间的相互影响</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.5.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.5.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
